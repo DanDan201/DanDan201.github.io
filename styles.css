@@ -231,7 +231,7 @@ h3 {
   margin-inline-start: 0;
 }
 
-.contact-list {
+.claim .contact-list {
   margin-top: var(--s3);
   padding-inline-start: 0;
   list-style: none;
