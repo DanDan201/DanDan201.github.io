@@ -76,10 +76,18 @@ if (!philips.includes('fill: #0B5ED7') || philips.includes('prefers-color-scheme
 }
 await writeFile(philipsPath, philips);
 
-try {
-  await readFile(path.join(logosDir, 'hsgs.png'));
-} catch {
-  throw new Error('hsgs.png missing — fetch via headless browser, see plan step 3');
+// These sources require the headless-browser fetch used for the committed files.
+const browserFetchedLogos = [
+  ['hsgs.png', 'https://hsgs.edu.vn/templates/m_hsgs/images/logo.gif'],
+  ['marie-curie.png', 'https://mariecuriehanoischool.com/wp-content/uploads/2026/08/logo.png'],
+  ['asml.svg', 'https://www.asml.com/images/icons/asml-logo.svg']
+];
+for (const [file, source] of browserFetchedLogos) {
+  try {
+    await readFile(path.join(logosDir, file));
+  } catch {
+    throw new Error(`${file} missing — fetch ${source} via headless browser`);
+  }
 }
 
 const innerSvg = svg => svg.match(/<svg\b[^>]*>([\s\S]*?)<\/svg>/)?.[1]?.trim();

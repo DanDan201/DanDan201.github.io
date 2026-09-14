@@ -257,6 +257,25 @@ h3 {
   font-weight: 600;
 }
 
+.degree-with-mark {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+
+.education-mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: none;
+  object-fit: contain;
+}
+
+.education-mark-wide {
+  width: 5rem;
+  mix-blend-mode: multiply;
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -279,9 +298,6 @@ h3 {
   font-weight: 500;
 }
 
-.chips .icon {
-  color: var(--ink-soft);
-}
 
 .facets {
   display: grid;
@@ -359,19 +375,66 @@ h3 {
   width: 1.125rem;
   height: 1.125rem;
   flex: none;
+  color: var(--mark);
 }
 
 .icon-lg {
   width: 1.5rem;
   height: 1.5rem;
-}
-
-
-h2 > .icon,
-.sub > .icon,
-.facets .icon {
   color: var(--mark);
 }
+
+
+svg:has(use[href="#lu-download"]),
+svg:has(use[href="#lu-folder-git-2"]) { color: #E05A33; }
+svg:has(use[href="#lu-briefcase"]),
+svg:has(use[href="#lu-plane-takeoff"]) { color: #2563B8; }
+svg:has(use[href="#lu-graduation-cap"]),
+svg:has(use[href="#lu-tv"]),
+svg:has(use[href="#lu-sparkles"]) { color: #7257B5; }
+svg:has(use[href="#lu-wrench"]),
+svg:has(use[href="#lu-cloud"]) { color: #D66B00; }
+svg:has(use[href="#lu-globe"]),
+svg:has(use[href="#lu-compass"]) { color: #008575; }
+svg:has(use[href="#lu-mail"]) { color: #D64545; }
+svg:has(use[href="#lu-map-pin"]) { color: #E04F5F; }
+svg:has(use[href="#lu-dumbbell"]) { color: #C43D57; }
+svg:has(use[href="#lu-film"]),
+svg:has(use[href="#lu-chart-spline"]) { color: #E76F51; }
+svg:has(use[href="#lu-book-open"]) { color: #228B72; }
+svg:has(use[href="#lu-gamepad-2"]),
+svg:has(use[href="#lu-database"]) { color: #356AE6; }
+svg:has(use[href="#lu-heart"]) { color: #E63972; }
+svg:has(use[href="#lu-boxes"]) { color: #8E44AD; }
+svg:has(use[href="#lu-infinity"]),
+svg:has(use[href="#dv-azuredevops"]) { color: #0078D4; }
+
+svg:has(use[href="#si-python"]) { color: #3776AB; }
+svg:has(use[href="#si-c"]) { color: #596B80; }
+svg:has(use[href="#si-cplusplus"]) { color: #00599C; }
+svg:has(use[href="#si-javascript"]) { color: #A98200; }
+svg:has(use[href="#si-html5"]) { color: #E34F26; }
+svg:has(use[href="#si-css"]) { color: #663399; }
+svg:has(use[href="#si-pytorch"]) { color: #EE4C2C; }
+svg:has(use[href="#si-ultralytics"]) { color: #7B3FF2; }
+svg:has(use[href="#si-huggingface"]) { color: #B77900; }
+svg:has(use[href="#si-langchain"]) { color: #1C5C4C; }
+svg:has(use[href="#si-langgraph"]) { color: #5A31D2; }
+svg:has(use[href="#si-ollama"]) { color: #2F6B5F; }
+svg:has(use[href="#si-fastapi"]) { color: #009688; }
+svg:has(use[href="#si-flask"]) { color: #596B80; }
+svg:has(use[href="#si-react"]) { color: #087EA4; }
+svg:has(use[href="#si-streamlit"]) { color: #E83E4D; }
+svg:has(use[href="#si-numpy"]) { color: #4D77CF; }
+svg:has(use[href="#si-pandas"]) { color: #7E57C2; }
+svg:has(use[href="#si-pytest"]) { color: #0A8FBD; }
+svg:has(use[href="#si-sonarqubeserver"]) { color: #126ED3; }
+svg:has(use[href="#si-git"]) { color: #F05032; }
+svg:has(use[href="#si-linux"]) { color: #C88700; }
+svg:has(use[href="#si-github"]) { color: #6E5494; }
+svg:has(use[href="#si-facebook"]) { color: #0866FF; }
+svg:has(use[href="#si-instagram"]) { color: #E1306C; }
+svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
 
 .mark {
   display: block;
@@ -382,11 +445,11 @@ h2 > .icon,
   height: 2.25rem;
 }
 
-.mark-wide {
+.mark-asml {
   width: auto;
-  height: 2rem;
-  mix-blend-mode: multiply;
+  height: 1.5rem;
 }
+
 
 .sr-only {
   position: absolute;
