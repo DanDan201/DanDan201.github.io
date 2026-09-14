@@ -410,31 +410,38 @@ svg:has(use[href="#lu-infinity"]),
 svg:has(use[href="#dv-azuredevops"]) { color: #0078D4; }
 
 svg:has(use[href="#si-python"]) { color: #3776AB; }
-svg:has(use[href="#si-c"]) { color: #596B80; }
+svg:has(use[href="#si-c"]) { color: #8592A1; }
 svg:has(use[href="#si-cplusplus"]) { color: #00599C; }
-svg:has(use[href="#si-javascript"]) { color: #A98200; }
+svg:has(use[href="#si-javascript"]) { color: #A19113; }
 svg:has(use[href="#si-html5"]) { color: #E34F26; }
 svg:has(use[href="#si-css"]) { color: #663399; }
 svg:has(use[href="#si-pytorch"]) { color: #EE4C2C; }
-svg:has(use[href="#si-ultralytics"]) { color: #7B3FF2; }
-svg:has(use[href="#si-huggingface"]) { color: #B77900; }
-svg:has(use[href="#si-langchain"]) { color: #1C5C4C; }
-svg:has(use[href="#si-langgraph"]) { color: #5A31D2; }
-svg:has(use[href="#si-ollama"]) { color: #2F6B5F; }
+svg:has(use[href="#si-ultralytics"]) { color: #111F68; }
+svg:has(use[href="#si-huggingface"]) { color: #AB8D14; }
+svg:has(use[href="#si-langchain"]),
+svg:has(use[href="#si-langgraph"]) { color: #5F96BF; }
+svg:has(use[href="#si-ollama"]) { color: #000000; }
 svg:has(use[href="#si-fastapi"]) { color: #009688; }
-svg:has(use[href="#si-flask"]) { color: #596B80; }
-svg:has(use[href="#si-react"]) { color: #087EA4; }
-svg:has(use[href="#si-streamlit"]) { color: #E83E4D; }
-svg:has(use[href="#si-numpy"]) { color: #4D77CF; }
-svg:has(use[href="#si-pandas"]) { color: #7E57C2; }
-svg:has(use[href="#si-pytest"]) { color: #0A8FBD; }
+svg:has(use[href="#si-flask"]) { color: #369DB3; }
+svg:has(use[href="#si-react"]) { color: #459BB2; }
+svg:has(use[href="#si-streamlit"]) { color: #FF4B4B; }
+svg:has(use[href="#si-numpy"]) { color: #013243; }
+svg:has(use[href="#si-pandas"]) { color: #150458; }
+svg:has(use[href="#si-pytest"]) { color: #0A9BD8; }
 svg:has(use[href="#si-sonarqubeserver"]) { color: #126ED3; }
-svg:has(use[href="#si-git"]) { color: #F05032; }
-svg:has(use[href="#si-linux"]) { color: #C88700; }
-svg:has(use[href="#si-github"]) { color: #6E5494; }
+svg:has(use[href="#si-git"]) { color: #F03C2E; }
+svg:has(use[href="#si-linux"]) { color: #B08B19; }
+svg:has(use[href="#si-github"]) { color: #181717; }
 svg:has(use[href="#si-facebook"]) { color: #0866FF; }
-svg:has(use[href="#si-instagram"]) { color: #E1306C; }
+svg:has(use[href="#si-instagram"]) { color: #FF0069; }
 svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
+
+.socials a:hover svg,
+.socials a:focus-visible svg,
+.rail a:hover .icon,
+.rail a:focus-visible .icon {
+  color: var(--mark);
+}
 
 .mark {
   display: block;
