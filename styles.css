@@ -366,10 +366,6 @@ h3 {
   height: 1.5rem;
 }
 
-.icon:has(use[href^="#lu-"]),
-.icon-lg:has(use[href^="#lu-"]) {
-  stroke: currentColor;
-}
 
 h2 > .icon,
 .sub > .icon,

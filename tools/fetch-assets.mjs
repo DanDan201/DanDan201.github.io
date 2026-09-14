@@ -77,9 +77,9 @@ if (!philips.includes('fill: #0B5ED7') || philips.includes('prefers-color-scheme
 await writeFile(philipsPath, philips);
 
 try {
-  await readFile(path.join(logosDir, 'hsgs.gif'));
+  await readFile(path.join(logosDir, 'hsgs.png'));
 } catch {
-  throw new Error('hsgs.gif missing — fetch via headless browser, see plan step 3');
+  throw new Error('hsgs.png missing — fetch via headless browser, see plan step 3');
 }
 
 const innerSvg = svg => svg.match(/<svg\b[^>]*>([\s\S]*?)<\/svg>/)?.[1]?.trim();
