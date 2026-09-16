@@ -427,6 +427,26 @@ h3 {
   max-width: 66ch;
 }
 
+.picks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  list-style: none;
+}
+
+.picks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.picks .pick-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  color: var(--ink);
+}
+
 .places {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));

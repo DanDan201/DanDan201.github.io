@@ -18,7 +18,9 @@ const lucide = [
   'briefcase', 'graduation-cap', 'wrench', 'sparkles', 'globe',
   'mail', 'map-pin', 'dumbbell', 'waves-ladder', 'gamepad-2',
   'chef-hat', 'plane', 'compass', 'film', 'tv', 'book-open', 'heart',
-  'plane-takeoff', 'database', 'boxes', 'cloud', 'infinity', 'chart-spline'
+  'plane-takeoff', 'database', 'boxes', 'cloud', 'infinity', 'chart-spline',
+  'rocket', 'swords', 'sword', 'crown', 'venetian-mask', 'atom',
+  'crosshair', 'radar', 'brain-circuit', 'car-front', 'trophy'
 ];
 // Devicon (MIT): https://github.com/devicons/devicon
 const devicons = {
@@ -78,7 +80,7 @@ await writeFile(philipsPath, philips);
 
 // These sources require the headless-browser fetch used for the committed files.
 const browserFetchedLogos = [
-  ['hsgs.png', 'https://hsgs.edu.vn/templates/m_hsgs/images/logo.gif'],
+  ['hsgs.jpg', 'https://hsgs.edu.vn/templates/m_hsgs/images/logo.gif'],
   ['marie-curie.png', 'https://mariecuriehanoischool.com/wp-content/uploads/2026/08/logo.png'],
   ['asml.svg', 'https://www.asml.com/images/icons/asml-logo.svg']
 ];
