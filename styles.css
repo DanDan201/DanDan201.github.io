@@ -153,18 +153,8 @@ h3 {
   height: 1.75rem;
 }
 
-.home-mark-swash {
+.home-mark-glyph {
   fill: currentColor;
-}
-
-.home-mark-leg {
-  stroke: currentColor;
-  stroke-width: 1.8;
-}
-
-.home-mark-bar {
-  stroke: var(--mark);
-  stroke-width: 2.1;
 }
 
 .home-mark:hover,
