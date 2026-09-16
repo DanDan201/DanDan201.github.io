@@ -15,7 +15,7 @@ const simple = [
 ];
 // Lucide (ISC): https://github.com/lucide-icons/lucide
 const lucide = [
-  'briefcase', 'folder-git-2', 'graduation-cap', 'wrench', 'sparkles', 'globe',
+  'briefcase', 'graduation-cap', 'wrench', 'sparkles', 'globe',
   'mail', 'map-pin', 'download', 'dumbbell', 'waves-ladder', 'gamepad-2',
   'chef-hat', 'plane', 'compass', 'film', 'tv', 'book-open', 'heart',
   'plane-takeoff', 'database', 'boxes', 'cloud', 'infinity', 'chart-spline'
