@@ -559,14 +559,53 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
   }
 }
 
-@media (min-width: 62rem) and (max-height: 39.999rem) {
+@media (min-width: 62rem) and (max-height: 48rem) {
+  :root {
+    --step--1: 0.8125rem;
+    --step-0: 1rem;
+    --step-1: clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem);
+    --step-2: clamp(1.375rem, 1.28rem + 0.45vw, 1.75rem);
+    --step-3: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
+    --s4: clamp(0.75rem, 2svh, 1.5rem);
+    --s5: clamp(1rem, 2.5svh, 2.5rem);
+    --s6: clamp(1.5rem, 4svh, 4rem);
+  }
+
   .frame {
-    min-height: auto;
     padding-block: var(--s5);
   }
 
+  .frame h2 {
+    margin-bottom: var(--s4);
+  }
+
+  .entry + .entry {
+    margin-block-start: var(--s4);
+    padding-block-start: var(--s4);
+  }
+
+  .education {
+    margin-top: var(--s4);
+  }
+
+  .degrees li + li {
+    margin-top: var(--s1);
+  }
+
+  .degree-with-mark {
+    min-height: 2rem;
+  }
+
+  .education-mark {
+    height: clamp(1.75rem, 4.5svh, 2.5rem);
+  }
+
+  .education-mark-wide {
+    height: clamp(1.5rem, 4svh, 2.25rem);
+  }
+
   .contact-inner {
-    min-height: auto;
+    min-height: calc(100svh - 4rem);
   }
 }
 
@@ -589,7 +628,7 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
   }
 }
 
-@media (min-width: 62rem) and (min-height: 40rem) {
+@media (min-width: 62rem) {
   html {
     scroll-snap-type: y mandatory;
   }
