@@ -559,7 +559,7 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
   }
 }
 
-@media (min-width: 62rem) and (max-height: 48rem) {
+@media (min-width: 62rem) and (max-height: 56rem) {
   :root {
     --step--1: 0.8125rem;
     --step-0: 1rem;
