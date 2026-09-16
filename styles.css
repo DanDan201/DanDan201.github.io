@@ -138,6 +138,34 @@ h3 {
   display: none;
 }
 
+.home-mark {
+  display: block;
+  width: fit-content;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+  padding-block-start: var(--s5);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.home-mark-icon {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.home-mark-arc {
+  stroke: currentColor;
+}
+
+.home-mark-bar {
+  stroke: var(--mark);
+}
+
+.home-mark:hover,
+.home-mark:focus-visible {
+  color: var(--mark);
+}
+
 .frames {
   min-width: 0;
 }
@@ -548,6 +576,14 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
   .toc a[aria-current] {
     border-inline-start-color: var(--mark);
     color: var(--ink);
+  }
+
+  .home-mark {
+    position: fixed;
+    top: var(--s4);
+    left: var(--s4);
+    padding: 0;
+    z-index: 1;
   }
 
   .frames {
