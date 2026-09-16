@@ -267,12 +267,13 @@ h3 {
 
 .education-mark {
   width: 100%;
-  height: clamp(2.5rem, 8vw, 3rem);
+  height: clamp(3rem, 10vw, 3.5rem);
   object-fit: contain;
   mix-blend-mode: multiply;
 }
 
 .education-mark-wide {
+  height: clamp(2.5rem, 8vw, 3rem);
   object-fit: cover;
 }
 
