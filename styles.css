@@ -18,14 +18,20 @@
 }
 
 :root {
-  color-scheme: light;
-  --paper: #FAFAF7;
-  --panel: #EFF0EB;
-  --ink: #17231E;
-  --ink-soft: #55625B;
-  --ink-faint: #6E7A73;
-  --rule: #D6DAD2;
-  --mark: #1D3FCB;
+  color-scheme: light dark;
+  --paper: light-dark(#FAFAF7, #111714);
+  --panel: light-dark(#EFF0EB, #182019);
+  --ink: light-dark(#17231E, #EDF0EC);
+  --ink-soft: light-dark(#55625B, #A9B5AE);
+  --ink-faint: light-dark(#6E7A73, #8A968F);
+  --rule: light-dark(#D6DAD2, #2A322D);
+  --mark: light-dark(#1D3FCB, #7FA0FF);
+  --plate: #FAFAF7;
+  --logo-blend: multiply;
+  --logo-plate: transparent;
+  --logo-pad: 0;
+  --logo-radius: 0;
+  --asml-filter: none;
   --step--1: clamp(0.8125rem, 0.7946rem + 0.0893vw, 0.875rem);
   --step-0: clamp(1rem, 0.9643rem + 0.1786vw, 1.125rem);
   --step-1: clamp(1.25rem, 1.1786rem + 0.3571vw, 1.5rem);
@@ -38,6 +44,29 @@
   --s5: 2.5rem;
   --s6: 4rem;
   --s7: 6.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --logo-blend: normal;
+    --logo-plate: var(--plate);
+    --logo-pad: 0.25rem;
+    --logo-radius: 0.25rem;
+    --asml-filter: brightness(0) invert(1);
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --logo-blend: normal;
+  --logo-plate: var(--plate);
+  --logo-pad: 0.25rem;
+  --logo-radius: 0.25rem;
+  --asml-filter: brightness(0) invert(1);
 }
 
 *,
@@ -149,8 +178,8 @@ h3 {
 
 .home-mark-icon {
   display: block;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
 .home-mark-glyph {
@@ -160,6 +189,39 @@ h3 {
 .home-mark:hover,
 .home-mark:focus-visible {
   color: var(--mark);
+}
+
+.theme-toggle {
+  position: fixed;
+  top: var(--s5);
+  right: clamp(1.25rem, 4vw, 3.5rem);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.theme-toggle-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--mark);
+  color: var(--mark);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--mark);
+  outline-offset: 3px;
 }
 
 .frames {
@@ -309,7 +371,10 @@ h3 {
   width: 100%;
   height: clamp(3rem, 10vw, 3.5rem);
   object-fit: contain;
-  mix-blend-mode: multiply;
+  mix-blend-mode: var(--logo-blend);
+  background: var(--logo-plate);
+  border-radius: var(--logo-radius);
+  padding: var(--logo-pad);
 }
 
 .education-mark-wide {
@@ -468,22 +533,22 @@ svg:has(use[href="#si-javascript"]) { color: #A19113; }
 svg:has(use[href="#si-html5"]) { color: #E34F26; }
 svg:has(use[href="#si-css"]) { color: #663399; }
 svg:has(use[href="#si-pytorch"]) { color: #EE4C2C; }
-svg:has(use[href="#si-ultralytics"]) { color: #111F68; }
+svg:has(use[href="#si-ultralytics"]) { color: light-dark(#111F68, #6E86FF); }
 svg:has(use[href="#si-huggingface"]) { color: #AB8D14; }
 svg:has(use[href="#si-langchain"]),
 svg:has(use[href="#si-langgraph"]) { color: #5F96BF; }
-svg:has(use[href="#si-ollama"]) { color: #000000; }
+svg:has(use[href="#si-ollama"]) { color: light-dark(#000000, #EDEDED); }
 svg:has(use[href="#si-fastapi"]) { color: #009688; }
 svg:has(use[href="#si-flask"]) { color: #369DB3; }
 svg:has(use[href="#si-react"]) { color: #459BB2; }
 svg:has(use[href="#si-streamlit"]) { color: #FF4B4B; }
-svg:has(use[href="#si-numpy"]) { color: #013243; }
-svg:has(use[href="#si-pandas"]) { color: #150458; }
+svg:has(use[href="#si-numpy"]) { color: light-dark(#013243, #4DABCF); }
+svg:has(use[href="#si-pandas"]) { color: light-dark(#150458, #E70488); }
 svg:has(use[href="#si-pytest"]) { color: #0A9BD8; }
 svg:has(use[href="#si-sonarqubeserver"]) { color: #126ED3; }
 svg:has(use[href="#si-git"]) { color: #F03C2E; }
 svg:has(use[href="#si-linux"]) { color: #B08B19; }
-svg:has(use[href="#si-github"]) { color: #181717; }
+svg:has(use[href="#si-github"]) { color: light-dark(#181717, #E6E6E6); }
 svg:has(use[href="#si-facebook"]) { color: #0866FF; }
 svg:has(use[href="#si-instagram"]) { color: #FF0069; }
 svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
@@ -507,6 +572,7 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
 .mark-asml {
   width: auto;
   height: 1.5rem;
+  filter: var(--asml-filter);
 }
 
 
@@ -580,6 +646,11 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
     left: var(--s4);
     padding: 0;
     z-index: 1;
+  }
+
+  .theme-toggle {
+    top: var(--s4);
+    right: var(--s4);
   }
 
   .frames {

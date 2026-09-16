@@ -10,6 +10,12 @@
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    try {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'light' || stored === 'dark') document.documentElement.dataset.theme = stored;
+    } catch {}
+  </script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="Anh Nguyen — Data &amp; AI Engineer">
   <meta property="og:description" content="Anh Nguyen — Data &amp; AI Engineer at Philips in Eindhoven, building AI agents for R&amp;D operations. Plus the films, games, food and countries outside the job.">
@@ -155,6 +161,12 @@
     </svg>
     <span class="sr-only">Home</span>
   </a>
+  <button class="theme-toggle" type="button" title="Theme" aria-label="Switch to dark theme" aria-pressed="false">
+    <svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor"/>
+    </svg>
+  </button>
   <nav class="toc" aria-label="Sections">
     <ol>
       <li><a href="#intro">Intro</a></li>
@@ -388,6 +400,27 @@
       }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
       document.querySelectorAll('.frame[id]').forEach(s => io.observe(s));
       setCurrent('intro');
+    })();
+    (() => {
+      const root = document.documentElement;
+      const button = document.querySelector('.theme-toggle');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      const query = matchMedia('(prefers-color-scheme: dark)');
+      const effective = () => root.dataset.theme || (query.matches ? 'dark' : 'light');
+      const sync = () => {
+        const dark = effective() === 'dark';
+        button.setAttribute('aria-pressed', String(dark));
+        button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+        meta.setAttribute('content', dark ? '#111714' : '#FAFAF7');
+      };
+      button.addEventListener('click', () => {
+        const next = effective() === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch {}
+        sync();
+      });
+      query.addEventListener('change', sync);
+      sync();
     })();
   </script>
 </body>
