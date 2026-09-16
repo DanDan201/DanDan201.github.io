@@ -230,17 +230,6 @@ h3 {
   margin-top: var(--s5);
 }
 
-.intro-tagline {
-  font-family: 'Archivo', system-ui, sans-serif;
-  font-size: var(--step-0);
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.intro-tagline + .lead {
-  margin-top: var(--s3);
-}
-
 .lead {
   font-size: var(--step-1);
   line-height: 1.48;
@@ -397,6 +386,20 @@ h3 {
   color: var(--ink-soft);
   font-size: var(--step--1);
   line-height: 1.45;
+}
+
+.closing-quote {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--ink-faint);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: var(--step-0);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.footer-meta {
+  margin-top: var(--s3);
 }
 
 .icon {
