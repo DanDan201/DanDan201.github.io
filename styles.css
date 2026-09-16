@@ -19,12 +19,12 @@
 
 :root {
   color-scheme: light dark;
-  --paper: light-dark(#FAFAF7, #111714);
-  --panel: light-dark(#EFF0EB, #182019);
+  --paper: light-dark(#FAFAF7, #1B2420);
+  --panel: light-dark(#EFF0EB, #243029);
   --ink: light-dark(#17231E, #EDF0EC);
   --ink-soft: light-dark(#55625B, #A9B5AE);
   --ink-faint: light-dark(#6E7A73, #8A968F);
-  --rule: light-dark(#D6DAD2, #2A322D);
+  --rule: light-dark(#D6DAD2, #3A453E);
   --mark: light-dark(#1D3FCB, #7FA0FF);
   --plate: #FAFAF7;
   --logo-blend: multiply;

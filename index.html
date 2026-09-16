@@ -411,7 +411,7 @@
         const dark = effective() === 'dark';
         button.setAttribute('aria-pressed', String(dark));
         button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
-        meta.setAttribute('content', dark ? '#111714' : '#FAFAF7');
+        meta.setAttribute('content', dark ? '#1B2420' : '#FAFAF7');
       };
       button.addEventListener('click', () => {
         const next = effective() === 'dark' ? 'light' : 'dark';
