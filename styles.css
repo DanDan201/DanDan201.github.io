@@ -160,10 +160,26 @@ h3 {
   margin-top: var(--s1);
 }
 
-.rail a:has(.icon) {
+.intro-languages {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.language-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+}
+
+.language {
   display: inline-flex;
   align-items: center;
-  gap: var(--s1);
+  gap: 0.3rem;
+}
+
+.language img {
+  flex: none;
+  border-radius: 50%;
 }
 
 .claim {
@@ -385,8 +401,6 @@ h3 {
   color: var(--mark);
 }
 
-
-svg:has(use[href="#lu-download"]) { color: #E05A33; }
 svg:has(use[href="#lu-briefcase"]),
 svg:has(use[href="#lu-plane-takeoff"]) { color: #2563B8; }
 svg:has(use[href="#lu-graduation-cap"]),
