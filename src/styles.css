@@ -4,7 +4,7 @@
   font-weight: 100 900;
   font-stretch: 62% 125%;
   font-display: swap;
-  src: url('assets/fonts/archivo-latin.woff2') format('woff2');
+  src: url('/assets/fonts/archivo-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -35,6 +35,10 @@
   --s5: 2.5rem;
   --s6: 4rem;
   --s7: 6.5rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --press: 100ms;
+  --hover: 160ms;
+  --enter: 280ms;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -610,7 +614,7 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
 }
 
 @media (min-width: 62rem) {
-  body {
+  #root {
     display: grid;
     grid-template-columns: 12rem minmax(0, 1fr);
   }
@@ -630,10 +634,10 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
   }
 
   .toc a {
+    position: relative;
     display: block;
-    border-inline-start: 2px solid transparent;
     padding-block: 0.45rem;
-    padding-inline-start: 0.75rem;
+    padding-inline-start: calc(0.75rem + 2px);
     color: var(--ink-faint);
     font-family: 'Archivo', system-ui, sans-serif;
     font-size: var(--step--1);
@@ -647,8 +651,15 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
   }
 
   .toc a[aria-current] {
-    border-inline-start-color: var(--mark);
     color: var(--ink);
+  }
+
+  .toc-indicator {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 2px;
+    background: var(--mark);
   }
 
   .home-mark {
@@ -762,9 +773,97 @@ svg:has(use[href="#dv-linkedin"]) { color: #0A66C2; }
   }
 }
 
+/* Interaction feedback: colour changes always; movement only when motion is allowed. */
+.home-mark,
+.theme-toggle,
+.toc a,
+.picks .pick-icon,
+.places span,
+.socials a,
+.socials svg {
+  transition: color var(--hover) var(--ease-out), border-color var(--hover) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .picks li:hover .pick-icon,
+  .places li:hover span {
+    color: var(--mark);
+  }
+}
+
+.theme-toggle[aria-pressed="true"] .theme-toggle-icon {
+  transform: rotate(180deg);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--enter);
+  animation-timing-function: var(--ease-out);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
+  }
+
+  .home-mark-icon,
+  .theme-toggle-icon,
+  .chips .icon,
+  .places img {
+    transition: transform var(--hover) var(--ease-out);
+  }
+
+  .theme-toggle-icon {
+    transition-duration: var(--enter);
+  }
+
+  /* Lifts use `translate`, which composes with the inline `transform` Motion leaves on revealed elements. */
+  .mark,
+  .education-mark,
+  .chips li {
+    transition: translate var(--hover) var(--ease-out);
+  }
+
+  .theme-toggle,
+  .toc a,
+  .picks .pick-icon,
+  .socials a {
+    transition: color var(--hover) var(--ease-out), border-color var(--hover) var(--ease-out), translate var(--hover) var(--ease-out), transform var(--hover) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .home-mark:hover .home-mark-icon {
+      transform: scale(1.05);
+    }
+
+    .toc a:not([aria-current]):hover {
+      translate: 2px 0;
+    }
+
+    .entry:hover .mark,
+    .degree-with-mark:hover .education-mark,
+    .chips li:hover,
+    .socials a:hover {
+      translate: 0 -2px;
+    }
+
+    .chips li:hover .icon {
+      transform: scale(1.15);
+    }
+
+    .picks li:hover .pick-icon {
+      transform: rotate(-8deg) scale(1.1);
+    }
+
+    .places li:hover img {
+      transform: scale(1.15);
+    }
+  }
+
+  .theme-toggle:active,
+  .socials a:active {
+    transform: scale(0.97);
+    transition-duration: var(--press);
   }
 }
 

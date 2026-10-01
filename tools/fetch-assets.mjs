@@ -2,9 +2,9 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
-const iconsDir = path.join(root, 'assets', 'icons');
-const flagsDir = path.join(root, 'assets', 'flags');
-const logosDir = path.join(root, 'assets', 'logos');
+const iconsDir = path.join(root, 'public', 'assets', 'icons');
+const flagsDir = path.join(root, 'public', 'assets', 'flags');
+const logosDir = path.join(root, 'public', 'assets', 'logos');
 
 // Simple Icons (CC0-1.0): https://github.com/simple-icons/simple-icons
 const simple = [
