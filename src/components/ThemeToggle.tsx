@@ -16,6 +16,7 @@ export function ThemeToggle() {
         <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" />
         <path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor" />
       </svg>
+      <span className="brackets" aria-hidden="true" />
     </button>
   );
 }

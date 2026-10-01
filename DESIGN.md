@@ -86,7 +86,7 @@ All sharp: 0 on every surface, button, plate and focus ring. Only exception: cou
 - Easing: ease-out-quint cubic-bezier(0.22, 1, 0.36, 1); releases use ease-in-quint cubic-bezier(0.64, 0, 0.78, 0).
 - Entrance: 280ms ease-out-quint, opacity plus at most 16px translate or scale 0.92 to 1.
 - Exit: 200ms ease-in-quint, lock brackets releasing when a section stops being active.
-- Hover: 160ms ease-out, colour, border colour and a 2px translate on links and buttons only.
+- Hover: 160ms ease-out-quint, links and buttons only, second beats delayed 40ms. Home mark and theme toggle: corner brackets close from scale 1.4, then the mark pitches up (caret rises 1.5px, horizon drops 2px and widens 12%) or the toggle icon turns 30deg. Tape links: an accent tick draws from the rail to the label. Contact links: a fill sweeps in from the left, the link lifts 2px, its icon nudges 2px and turns accent. Reduced motion keeps only the colour, bracket and fill state changes, with no transition.
 - Active/Press: 100ms, scale 0.97.
 - Stagger: 70ms between children (60ms in chip and flag grids, 90ms at the top of the hero).
 - Lock: 320ms ease-out-quint, corner brackets close from scale 1.3 to 1 with opacity 0 to 1, replayed every time a section becomes active.
@@ -100,6 +100,7 @@ All sharp: 0 on every surface, button, plate and focus ring. Only exception: cou
 
 ## Component Patterns
 - Shell: fixed viewport corner brackets and a right-edge tick scale (desktop), altitude tape navigation with a moving pointer (desktop), status bar with progress strip (mobile).
+- Mark (home link and favicon): an "A" drawn as a nose caret in Foreground, its crossbar an Accent horizon line running past both legs. Favicon sits on a square #0B0B10 tile. Hover and keyboard focus lock corner brackets onto the home link (see Motion).
 - Hero: asymmetric. Name top left, pitch ladder top right, full-width horizon with flight path marker, lead bottom left, data block bottom right.
 - Work: flight-log timeline with diamond nodes, then compact education rows.
 - Stack: instrument modules with corner brackets in an asymmetric 2+3 grid (6+6, then 3+3+6).
