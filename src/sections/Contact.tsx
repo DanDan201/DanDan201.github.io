@@ -5,7 +5,7 @@ import { contact } from '../content';
 import { fade, slideFromLeft, staggerGroup, useReveal } from '../motion';
 
 export function Contact() {
-  const reveal = useReveal('scroll');
+  const reveal = useReveal('contact');
   return (
     <Frame id="contact" icon="lu-mail" title="Contact">
       <motion.div className="comms" variants={staggerGroup(0.07)} {...reveal}>

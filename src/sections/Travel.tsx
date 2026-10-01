@@ -6,7 +6,7 @@ import { travel } from '../content';
 import { flap, scaleIn, staggerGroup, useReveal } from '../motion';
 
 export function Travel() {
-  const reveal = useReveal('scroll');
+  const reveal = useReveal('travel');
   return (
     <Frame id="travel" icon="lu-globe" title="Travel">
       <div className="travel-grid">

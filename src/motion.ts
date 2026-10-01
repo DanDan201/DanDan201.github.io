@@ -1,5 +1,7 @@
 import { stagger, useReducedMotion, useScroll, useTransform, type Transition, type Variants } from 'motion/react';
-import { useSyncExternalStore, type RefObject } from 'react';
+import { useContext, useSyncExternalStore, type RefObject } from 'react';
+import type { SectionId } from './content';
+import { RevealedSectionsContext } from './hooks/useActiveSection';
 
 /** Motion tokens from DESIGN.md. Entrances ease out (quint); releases ease in. */
 export const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -15,36 +17,52 @@ export const staggerGroup = (interval: number, startDelay = 0): Variants => ({
   visible: { transition: { delayChildren: stagger(interval, { startDelay }) } },
 });
 
+/*
+ * Reveal variants. `visible` is the entrance; `hidden` carries the 200ms release so content
+ * resets quickly as its section leaves the viewport, ready to play again on the next visit.
+ */
 export const fade: Variants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, transition: release },
   visible: { opacity: 1, transition: enter },
 };
 
 export const slideFromLeft: Variants = {
-  hidden: { opacity: 0, x: -16 },
+  hidden: { opacity: 0, x: -16, transition: release },
   visible: { opacity: 1, x: 0, transition: enter },
 };
 
 export const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.92 },
+  hidden: { opacity: 0, scale: 0.92, transition: release },
   visible: { opacity: 1, scale: 1, transition: enter },
 };
 
 /** Lines that draw along their length; the element's transform-origin decides where they start. */
 export const drawX: Variants = {
-  hidden: { scaleX: 0 },
+  hidden: { scaleX: 0, transition: release },
   visible: { scaleX: 1, transition: draw },
+};
+
+/** The work timeline's track, drawn top to bottom. */
+export const drawY: Variants = {
+  hidden: { scaleY: 0, transition: release },
+  visible: { scaleY: 1, transition: draw },
+};
+
+/** A timeline node lighting up as the track reaches it. */
+export const nodeLight: Variants = {
+  hidden: { opacity: 0.3, scale: 0.5, transition: release },
+  visible: { opacity: 1, scale: 1, transition: enter },
 };
 
 /** Departure-board row flipping down into place (needs `perspective` on the parent). */
 export const flap: Variants = {
-  hidden: { opacity: 0, rotateX: -90 },
+  hidden: { opacity: 0, rotateX: -90, transition: release },
   visible: { opacity: 1, rotateX: 0, transition: { duration: 0.36, ease: easeOut } },
 };
 
 /** The name is uncovered by a panel sliding off to the right. */
 export const shutter: Variants = {
-  hidden: { x: '0%' },
+  hidden: { x: '0%', transition: release },
   visible: { x: '101%', transition: { duration: 0.52, ease: easeOut } },
 };
 
@@ -57,25 +75,13 @@ export const lock: Variants = {
   locked: (instant?: boolean) => ({ opacity: 1, scale: 1, transition: instant ? { duration: 0 } : lockIn }),
 };
 
-/** The same lock, played once inside a reveal tree (which reduced motion already skips). */
+/** The same lock, played inside a reveal tree (which reduced motion already skips). */
 export const lockOnView: Variants = {
   hidden: lock.idle,
   visible: lock.locked,
 };
 
-/**
- * Props for the root of a variant tree. Plays `hidden -> visible` once, on mount or when
- * the element first scrolls into view. With reduced motion the final state renders
- * immediately, so content never waits on an animation.
- */
-export function useReveal(trigger: 'mount' | 'scroll') {
-  const reduce = useReducedMotion();
-  if (reduce) return { initial: false, animate: 'visible' } as const;
-  if (trigger === 'mount') return { initial: 'hidden', animate: 'visible' } as const;
-  return { initial: 'hidden', whileInView: 'visible', viewport: { once: true, margin: '-80px' } } as const;
-}
-
-/** The HUD layout (tape, snap, depth) starts at 62rem, mirroring the media queries in styles.css. */
+/** The HUD layout starts at 62rem, mirroring the media queries in styles.css. */
 const desktopQuery = window.matchMedia('(min-width: 62rem)');
 // Module-level so useSyncExternalStore keeps one subscription instead of resubscribing every render.
 const subscribeDesktop = (onChange: () => void) => {
@@ -84,24 +90,59 @@ const subscribeDesktop = (onChange: () => void) => {
 };
 const isDesktop = () => desktopQuery.matches;
 
-/** Scroll-linked transforms run on the desktop HUD layout only, and never with reduced motion. */
-export function useScrollMotion(): boolean {
+/**
+ * Desktop with motion allowed: sections run as a pinned stage. Mirrors the
+ * `(min-width: 62rem) and (prefers-reduced-motion: no-preference)` block in styles.css.
+ */
+export function useStageMode(): boolean {
   const reduce = useReducedMotion();
   const desktop = useSyncExternalStore(subscribeDesktop, isDesktop);
   return desktop && !reduce;
 }
 
 /**
- * Scroll-linked depth for a section's content: it rises into place while the section's top
- * travels up the viewport, then shrinks, dims and drifts up while the section's bottom leaves.
- * Undefined (no binding) on mobile and with reduced motion, so content stays put there.
+ * Props for the root of a variant tree; replays every visit. On the stage the content plays in when
+ * its section becomes active (already on screen behind the wipe) and resets once the section is out
+ * of sight; in the stacked mobile flow it plays when it scrolls into view. Reduced motion renders the
+ * final state.
  */
-export function useSectionDepth(ref: RefObject<HTMLElement | null>) {
-  const enabled = useScrollMotion();
-  const { scrollYProgress: arriving } = useScroll({ target: ref, offset: ['start end', 'start start'] });
-  const { scrollYProgress: leaving } = useScroll({ target: ref, offset: ['end end', 'end start'] });
-  const y = useTransform([arriving, leaving], ([a, l]: number[]) => `${(1 - a) * 8 - l * 6}vh`);
-  const scale = useTransform([arriving, leaving], ([a, l]: number[]) => (0.96 + a * 0.04) * (1 - l * 0.06));
-  const opacity = useTransform([arriving, leaving], ([a, l]: number[]) => Math.min(0.3 + a * 0.7, 1 - l * 0.7));
-  return enabled ? { y, scale, opacity } : undefined;
+export function useReveal(id: SectionId) {
+  const reduce = useReducedMotion();
+  const stage = useStageMode();
+  const revealed = useContext(RevealedSectionsContext).has(id);
+  if (reduce) return { initial: false, animate: 'visible' } as const;
+  if (stage) return { initial: 'hidden', animate: revealed ? 'visible' : 'hidden' } as const;
+  return { initial: 'hidden', whileInView: 'visible', viewport: { margin: '-80px' } } as const;
+}
+
+// Scroll lengths of one stage transition and of the still hold between transitions, in svh.
+// Mirror --fade and --hold in styles.css.
+const FADE = 60;
+const HOLD = 40;
+
+/**
+ * Scroll-scrubbed crossfade for one pinned stage. Over the first FADE of its pin a section wipes
+ * in top to bottom over the previous one, an accent scan line riding the wipe edge; over the last
+ * FADE it dims and shrinks away under the next. The first section has no wipe and the last never
+ * leaves. `leaving` (0..1) lets a section add its own exit; styles are undefined off the stage.
+ */
+export function useStage(ref: RefObject<HTMLElement | null>, place: 'first' | 'middle' | 'last') {
+  const enabled = useStageMode();
+  const { scrollYProgress: pinned } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const length = place === 'middle' ? 2 * FADE + HOLD : FADE + HOLD;
+  const wipeEnd = place === 'first' ? 0 : FADE / length;
+  const leaveStart = place === 'last' ? 1 : (length - FADE) / length;
+  const arriving = useTransform(pinned, p => (wipeEnd === 0 ? 1 : Math.min(p / wipeEnd, 1)));
+  const leaving = useTransform(pinned, p => (leaveStart === 1 ? 0 : Math.max((p - leaveStart) / (1 - leaveStart), 0)));
+  const clipPath = useTransform(arriving, a => `inset(0 0 ${(1 - a) * 100}% 0)`);
+  const opacity = useTransform(leaving, l => 1 - l);
+  const scale = useTransform(leaving, l => 1 - l * 0.04);
+  const scanY = useTransform(arriving, a => `${a * 100}svh`);
+  const scanOpacity = useTransform(arriving, a => (a > 0 && a < 1 ? 1 : 0));
+  return {
+    enabled,
+    leaving,
+    style: enabled ? (place === 'first' ? { opacity, scale } : { clipPath, opacity, scale }) : undefined,
+    scan: enabled && place !== 'first' ? { y: scanY, opacity: scanOpacity } : undefined,
+  };
 }

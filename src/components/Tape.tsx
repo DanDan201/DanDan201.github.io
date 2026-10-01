@@ -1,44 +1,14 @@
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react';
-import { useEffect, useRef } from 'react';
+import { motion, useReducedMotion, useSpring, useTransform, type MotionValue } from 'motion/react';
 import { sections, type SectionId } from '../content';
 
 /**
  * Section navigation drawn as a vertical altitude tape (desktop) plus a status bar (mobile).
- * Scroll offset maps piecewise-linearly between section tops onto evenly spaced labels,
- * so the pointer rests exactly on a label whenever its section is snapped into view.
- * With reduced motion the pointer and progress fill do not follow scroll; they jump to the active section.
+ * `progress` reaches i / (n - 1) exactly when section i is at rest, so the pointer sits on a
+ * label whenever its section is fully shown. With reduced motion the pointer and progress fill
+ * do not follow scroll; they jump to the active section.
  */
-export function Tape({ active }: { active: SectionId }) {
+export function Tape({ active, progress }: { active: SectionId; progress: MotionValue<number> }) {
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
-  const tops = useRef<number[]>([]);
-
-  useEffect(() => {
-    const measure = () => {
-      // The last sections can be shorter than the viewport on mobile; clamp so the end stays reachable.
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      tops.current = sections.map(({ id }) => {
-        const top = (document.getElementById(id)?.getBoundingClientRect().top ?? 0) + window.scrollY;
-        return Math.min(top, max);
-      });
-    };
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(document.body);
-    window.addEventListener('resize', measure);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', measure);
-    };
-  }, []);
-
-  const progress = useTransform(scrollY, y => {
-    const stops = tops.current;
-    for (let i = 1; i < stops.length; i++) {
-      if (y < stops[i]) return (i - 1 + Math.max(0, y - stops[i - 1]) / (stops[i] - stops[i - 1])) / (stops.length - 1);
-    }
-    return stops.length > 1 ? 1 : 0;
-  });
   const smooth = useSpring(progress, { stiffness: 400, damping: 40, restDelta: 0.0005 });
   const pointerY = useTransform(smooth, p => `${p * 100}%`);
   const activeIndex = sections.findIndex(section => section.id === active);

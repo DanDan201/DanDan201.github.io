@@ -85,18 +85,19 @@ All sharp: 0 on every surface, button, plate and focus ring. Only exception: cou
 ## Motion (see animate skill for canonical timing table)
 - Easing: ease-out-quint cubic-bezier(0.22, 1, 0.36, 1); releases use ease-in-quint cubic-bezier(0.64, 0, 0.78, 0).
 - Entrance: 280ms ease-out-quint, opacity plus at most 16px translate or scale 0.92 to 1.
-- Exit: 200ms ease-in-quint, lock brackets releasing when a section stops being active.
+- Exit: 200ms ease-in-quint, lock brackets releasing when a section stops being active and revealed content resetting once its section is out of sight.
 - Hover: 160ms ease-out-quint, links and buttons only, second beats delayed 40ms. Home mark and theme toggle: corner brackets close from scale 1.4, then the mark pitches up (caret rises 1.5px, horizon drops 2px and widens 12%) or the toggle icon turns 30deg. Tape links: an accent tick draws from the rail to the label. Contact links: a fill sweeps in from the left, the link lifts 2px, its icon nudges 2px and turns accent. Reduced motion keeps only the colour, bracket and fill state changes, with no transition.
 - Active/Press: 100ms, scale 0.97.
 - Stagger: 70ms between children (60ms in chip and flag grids, 90ms at the top of the hero).
 - Lock: 320ms ease-out-quint, corner brackets close from scale 1.3 to 1 with opacity 0 to 1, replayed every time a section becomes active.
-- Draw: 480ms ease-out-quint, scaleX or scaleY from 0 for the horizon line and the dotted leaders.
+- Draw: 480ms ease-out-quint, scaleX or scaleY from 0 for the horizon line, the dotted leaders and the work timeline track (whose nodes light as it passes).
 - Flap: 360ms ease-out-quint, rotateX from -90deg for departure board rows.
 - Shutter: 520ms ease-out-quint, the name is uncovered by a panel sliding right with a 2px accent edge.
-- Scroll-linked (desktop): each section's content rises 8vh into place while its top travels up the viewport, then shrinks to 0.94, dims to 30% opacity and drifts up 6vh while its bottom leaves. The hero banks the horizon 8deg and lifts the name away on the way out. The work timeline draws with scroll on every viewport. The tape pointer follows scroll through a spring (stiffness 400, damping 40).
-- Pinned/horizontal: none. Desktop keeps scroll-snap (one section per gesture) so every transition settles on a finished frame.
-- Mobile: no snap, no depth effect, no parallax, no hero bank; reveals and the timeline draw only.
-- Reduced motion: no scroll-linked transforms, no boot sequence, no flaps, draws or shutters. Content renders in its final state. The tape pointer, progress fill and heading brackets jump to the active section with no transition; smooth scrolling is off.
+- Stage (desktop, the user's chosen transition): sections are pinned screens. Each section is a tall slot whose 100svh stage sticks to the viewport; slots overlap so that over 60svh of scrolling the next stage wipes in top to bottom over the current one, an accent scan line riding the wipe edge, while the current one dims to 0 and shrinks to 0.96 underneath. 40svh of still hold separates wipes, so every section costs one screen of scrolling. All of it is scrubbed by native scroll: no snapping, no hijacking, nothing pulls the page back. The hero has no wipe in; on the way out its horizon banks 8deg and its name climbs away. The tape pointer follows scroll through a spring (stiffness 400, damping 40).
+- Reveals replay: on the stage, content plays in when its section becomes active (or as soon as it is uncovered when scrolling back) and resets once the section is out of sight, so every visit replays it. In the mobile flow it plays each time it scrolls into view (whileInView with once off, margin -80px). This repetition is the user's explicit request.
+- Pinned/horizontal: one pinned stage covering the whole desktop page; no horizontal scroll.
+- Mobile: ordinary scrolling, no stage, no parallax, no hero bank; reveals and the timeline draw on view.
+- Reduced motion: no stage (sections scroll normally), no scroll-linked transforms, no boot sequence, no flaps, draws or shutters. Content renders in its final state. The tape pointer, progress fill and heading brackets jump to the active section with no transition; smooth scrolling is off.
 
 ## Component Patterns
 - Shell: fixed viewport corner brackets and a right-edge tick scale (desktop), altitude tape navigation with a moving pointer (desktop), status bar with progress strip (mobile).
@@ -120,4 +121,5 @@ All sharp: 0 on every surface, button, plate and focus ring. Only exception: cou
 - Focus indicators: 2px solid Ring, offset 3px, square.
 - Touch targets: minimum 44x44px (tape links, contact links, theme toggle, home mark).
 - Semantic HTML: one h1 (the name), one h2 per section, h3 inside; main landmark; sections labelled by their headings.
+- Stage: inactive sections are inert (no focus, clicks or screen-reader content) because they are hidden behind the wipe; the tape links reach every section, and following one lands after its wipe and makes it active.
 - Reduced motion: as listed under Motion.

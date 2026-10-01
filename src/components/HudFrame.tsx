@@ -1,9 +1,9 @@
 import { motion, useScroll, useTransform } from 'motion/react';
-import { useScrollMotion } from '../motion';
+import { useStageMode } from '../motion';
 
 /** Desktop HUD furniture: viewport corner brackets and a tick scale that slides as the page scrolls. */
 export function HudFrame() {
-  const animate = useScrollMotion();
+  const animate = useStageMode();
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '-50%']);
   return (

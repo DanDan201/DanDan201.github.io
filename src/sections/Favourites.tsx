@@ -5,7 +5,7 @@ import { facets } from '../content';
 import { drawX, fade, staggerGroup, useReveal } from '../motion';
 
 export function Favourites() {
-  const reveal = useReveal('scroll');
+  const reveal = useReveal('favourites');
   return (
     <Frame id="favourites" icon="lu-sparkles" title="Favourites">
       <motion.dl className="readout" variants={staggerGroup(0.07)} {...reveal}>

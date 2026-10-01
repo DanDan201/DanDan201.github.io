@@ -5,7 +5,7 @@ import { stack } from '../content';
 import { fade, lockOnView, scaleIn, staggerGroup, useReveal } from '../motion';
 
 export function Stack() {
-  const reveal = useReveal('scroll');
+  const reveal = useReveal('stack');
   return (
     <Frame id="stack" icon="lu-wrench" title="Stack">
       <motion.div className="panel" variants={staggerGroup(0.09)} {...reveal}>

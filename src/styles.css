@@ -350,11 +350,10 @@ h3 {
   padding: var(--s7) var(--gutter);
 }
 
-.frame > .inner {
+.inner {
   width: 100%;
   max-width: 64rem;
   margin-inline: auto;
-  transform-origin: 50% 20%;
 }
 
 .frame-title {
@@ -394,7 +393,7 @@ h3 {
   overflow: clip;
 }
 
-.hero > .inner {
+.hero .inner {
   max-width: 72rem;
 }
 
@@ -558,15 +557,9 @@ h3 {
   left: 0;
   width: 0.6875rem;
   height: 0.6875rem;
-  border: 1px solid var(--fg-soft);
-  background: var(--bg);
-  rotate: 45deg;
-  transition: background-color var(--hover) var(--ease-out), border-color var(--hover) var(--ease-out);
-}
-
-.log-entry[data-lit] .log-node {
-  border-color: var(--accent);
+  border: 1px solid var(--accent);
   background: var(--accent);
+  rotate: 45deg;
 }
 
 .log-when,
@@ -897,12 +890,8 @@ h3 {
   }
 }
 
-/* Desktop HUD: tape, frame furniture, snap, 12-column sections. */
+/* Desktop HUD: tape, frame furniture, 12-column sections. */
 @media (min-width: 62rem) {
-  html {
-    scroll-snap-type: y mandatory;
-  }
-
   .status-bar {
     display: none;
   }
@@ -1005,7 +994,7 @@ h3 {
 
   .hud {
     position: fixed;
-    z-index: 0;
+    z-index: 2;
     inset: 0;
     display: block;
     pointer-events: none;
@@ -1047,8 +1036,6 @@ h3 {
     display: grid;
     align-content: center;
     scroll-margin-top: 0;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
 
   .hero-grid {
@@ -1182,6 +1169,66 @@ h3 {
     --s6: clamp(1.5rem, 3.5svh, 3rem);
     --s7: clamp(2rem, 6svh, 4rem);
     --s8: clamp(2.5rem, 7svh, 6rem);
+  }
+}
+
+/*
+ * Desktop with motion: a pinned stage. Each section is a tall slot whose .stage sticks to the
+ * viewport. Slots overlap by one screen plus --fade, so for --fade of scrolling two stages are
+ * pinned together and the later one wipes in over the earlier one; --hold is the still time
+ * between wipes. Anchors land after the wipe (negative scroll margin). Lengths mirror FADE and
+ * HOLD in motion.ts. Inactive sections are inert (Frame, Intro), so only the visible stage takes
+ * clicks and focus. This block comes after the plain desktop .frame rules and overrides them.
+ */
+@media (min-width: 62rem) and (prefers-reduced-motion: no-preference) {
+  :root {
+    --fade: 60svh;
+    --hold: 40svh;
+  }
+
+  .frame {
+    /* Block containers honour align-content too, so the plain desktop centring must be undone. */
+    display: block;
+    align-content: normal;
+    min-height: 0;
+    height: calc(100svh + 2 * var(--fade) + var(--hold));
+    padding: 0;
+    scroll-margin-top: calc(-1 * var(--fade));
+  }
+
+  .frame:first-child {
+    height: calc(100svh + var(--hold) + var(--fade));
+    scroll-margin-top: 0;
+  }
+
+  .frame:last-child {
+    height: calc(100svh + var(--fade) + var(--hold));
+  }
+
+  .frame + .frame {
+    margin-top: calc(-1 * (100svh + var(--fade)));
+  }
+
+  .stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: grid;
+    align-content: center;
+    padding: var(--s7) var(--gutter);
+    overflow: clip;
+    background: var(--bg);
+    transform-origin: 50% 40%;
+  }
+
+  /* Rides the wipe edge; top -1px keeps it just inside the revealed area. */
+  .scan {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: var(--accent);
   }
 }
 
