@@ -1,5 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#0B0B10"/>
-  <path d="M6 27 16 6 26 27" fill="none" stroke="#F8FAFC" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+  <!-- Same mark as the home link (src/components/HomeMark.tsx). The caret follows the browser's colour scheme. -->
+  <style>
+    .caret { stroke: #0B0B10; }
+    @media (prefers-color-scheme: dark) { .caret { stroke: #F8FAFC; } }
+  </style>
+  <path class="caret" d="M6 27 16 6 26 27" fill="none" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
   <path d="M3 19.5h26" stroke="#3B82F6" stroke-width="2"/>
 </svg>

@@ -100,7 +100,7 @@ All sharp: 0 on every surface, button, plate and focus ring. Only exception: cou
 
 ## Component Patterns
 - Shell: fixed viewport corner brackets and a right-edge tick scale (desktop), altitude tape navigation with a moving pointer (desktop), status bar with progress strip (mobile).
-- Mark (home link and favicon): an "A" drawn as a nose caret in Foreground, its crossbar an Accent horizon line running past both legs. Favicon sits on a square #0B0B10 tile. Hover and keyboard focus lock corner brackets onto the home link (see Motion).
+- Mark (home link and favicon): an "A" drawn as a nose caret in Foreground, its crossbar an Accent horizon line running past both legs. The favicon is the same mark on a transparent background; its caret is #0B0B10 or #F8FAFC to match the browser's colour scheme. Hover and keyboard focus lock corner brackets onto the home link (see Motion).
 - Hero: asymmetric. Name top left, pitch ladder top right, full-width horizon with flight path marker, lead bottom left, data block bottom right.
 - Work: flight-log timeline with diamond nodes, then compact education rows.
 - Stack: instrument modules with corner brackets in an asymmetric 2+3 grid (6+6, then 3+3+6).
