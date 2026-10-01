@@ -30,7 +30,7 @@ const devicons = {
 // circle-flags (MIT): https://github.com/HatScripts/circle-flags
 const flags = [
   'vn', 'th', 'sg', 'nl', 'de', 'be', 'lu', 'hu', 'it', 'es', 'gr',
-  'at', 'cz', 'no', 'ch', 'fr', 'jp', 'cn', 'kr', 'se', 'fi', 'pt'
+  'at', 'cz', 'no', 'ch', 'fr', 'jp', 'cn', 'kr', 'se', 'fi', 'pt', 'us'
 ];
 
 await Promise.all([iconsDir, flagsDir, logosDir].map(dir => mkdir(dir, { recursive: true })));
@@ -79,8 +79,10 @@ if (!philips.includes('fill: #0B5ED7') || philips.includes('prefers-color-scheme
 await writeFile(philipsPath, philips);
 
 // These sources require the headless-browser fetch used for the committed files.
+// The committed education logos (hsgs, marie-curie, tilburg, tue) have their outer white made transparent
+// so they sit on either theme; Tilburg keeps the white inside its ring, which its navy lettering needs.
 const browserFetchedLogos = [
-  ['hsgs.jpg', 'https://hsgs.edu.vn/templates/m_hsgs/images/logo.gif'],
+  ['hsgs.png', 'https://hsgs.edu.vn/templates/m_hsgs/images/logo.gif'],
   ['marie-curie.png', 'https://mariecuriehanoischool.com/wp-content/uploads/2026/08/logo.png'],
   ['asml.svg', 'https://www.asml.com/images/icons/asml-logo.svg']
 ];

@@ -22,8 +22,18 @@ export interface Place {
   name: string;
 }
 
+/** A label/value line in a HUD data block. */
+export interface Fact {
+  label: string;
+  value: string;
+}
+
 export const intro = {
-  facts: ['Based in Eindhoven, Netherlands', 'Born in Hanoi, Vietnam', '26/09/2001'],
+  facts: [
+    { label: 'Based in', value: 'Eindhoven, Netherlands' },
+    { label: 'Born in', value: 'Hanoi, Vietnam' },
+    { label: 'Birthday', value: '26/09/2001' },
+  ] satisfies Fact[],
   languages: [
     { flag: 'vn', name: 'Vietnamese' },
     { flag: 'nl', name: 'Dutch' },
@@ -35,29 +45,40 @@ export const intro = {
 export const jobs = [
   {
     logo: 'philips-shield.svg',
-    logoClass: 'mark-tall',
+    wide: false,
     company: 'Philips',
     place: 'Eindhoven, Netherlands',
-    period: 'Nov 2025 – present',
+    start: 'Nov 2025',
+    end: 'present',
     role: 'Data & AI Engineer',
     summary: 'I build AI agents for R&D operations, ranging from software development, testing, documentation and any replacable manual work. Ocassionally working on AI features for Personal Health products.',
   },
   {
     logo: 'asml.svg',
-    logoClass: 'mark-asml',
+    wide: true,
     company: 'ASML',
     place: 'Veldhoven, Netherlands',
-    period: 'Dec 2024 – Oct 2025',
+    start: 'Dec 2024',
+    end: 'Oct 2025',
     role: 'AI/Software Engineer',
     summary: "Minimizing the overlay between semiconductor layers, enabling ASML's latest High-NA EUV machine to print more chips with higher quality.",
   },
 ];
 
-export const degrees = [
-  { logo: 'tue.png', wide: true, title: 'MSc Data Science and Artificial Intelligence', detail: 'Eindhoven University of Technology, 2024–2026' },
-  { logo: 'tilburg.jpg', wide: false, title: 'BSc Cognitive Science and Artificial Intelligence', detail: 'Tilburg University, 2020–2024' },
-  { logo: 'hsgs.jpg', wide: false, title: 'HSGS High School for Gifted Students', detail: '2016–2019' },
-  { logo: 'marie-curie.png', wide: false, title: 'Marie Curie Middle School', detail: '2012–2016' },
+export interface Degree {
+  logo: string;
+  wide: boolean;
+  title: string;
+  school?: string;
+  start: string;
+  end: string;
+}
+
+export const degrees: Degree[] = [
+  { logo: 'tue.png', wide: true, title: 'MSc Data Science and Artificial Intelligence', school: 'Eindhoven University of Technology', start: '2024', end: '2026' },
+  { logo: 'tilburg.png', wide: false, title: 'BSc Cognitive Science and Artificial Intelligence', school: 'Tilburg University', start: '2020', end: '2024' },
+  { logo: 'hsgs.png', wide: false, title: 'HSGS High School for Gifted Students', start: '2016', end: '2019' },
+  { logo: 'marie-curie.png', wide: false, title: 'Marie Curie Middle School', start: '2012', end: '2016' },
 ];
 
 export const stack: { title: string; items: Labelled[] }[] = [
@@ -172,48 +193,58 @@ export const facets: Facet[] = [
   { icon: 'lu-heart', title: 'Public Figures', text: 'Marco Pierre White, Max Verstappen' },
 ];
 
-export const travel: { title: string; icon: string; places: Place[] }[] = [
-  {
-    title: 'Asia',
-    icon: 'lu-map-pin',
-    places: [
-      { flag: 'vn', name: 'Vietnam' },
-      { flag: 'th', name: 'Thailand' },
-      { flag: 'sg', name: 'Singapore' },
-    ],
-  },
-  {
-    title: 'Europe',
-    icon: 'lu-map-pin',
-    places: [
-      { flag: 'nl', name: 'Netherlands' },
-      { flag: 'de', name: 'Germany' },
-      { flag: 'be', name: 'Belgium' },
-      { flag: 'lu', name: 'Luxembourg' },
-      { flag: 'hu', name: 'Hungary' },
-      { flag: 'it', name: 'Italy' },
-      { flag: 'es', name: 'Spain' },
-      { flag: 'gr', name: 'Greece' },
-      { flag: 'at', name: 'Austria' },
-      { flag: 'cz', name: 'Czech Republic' },
-      { flag: 'no', name: 'Norway' },
-      { flag: 'ch', name: 'Switzerland' },
-      { flag: 'fr', name: 'France' },
-    ],
-  },
-  {
+interface Region {
+  title: string;
+  icon: string;
+  places: Place[];
+}
+
+/** Visited countries by region, plus the destinations still ahead. */
+export const travel: { visited: Region[]; next: Region } = {
+  visited: [
+    {
+      title: 'Asia',
+      icon: 'lu-map-pin',
+      places: [
+        { flag: 'vn', name: 'Vietnam' },
+        { flag: 'th', name: 'Thailand' },
+        { flag: 'sg', name: 'Singapore' },
+        { flag: 'cn', name: 'China' },
+      ],
+    },
+    {
+      title: 'Europe',
+      icon: 'lu-map-pin',
+      places: [
+        { flag: 'nl', name: 'Netherlands' },
+        { flag: 'de', name: 'Germany' },
+        { flag: 'be', name: 'Belgium' },
+        { flag: 'lu', name: 'Luxembourg' },
+        { flag: 'hu', name: 'Hungary' },
+        { flag: 'it', name: 'Italy' },
+        { flag: 'es', name: 'Spain' },
+        { flag: 'gr', name: 'Greece' },
+        { flag: 'at', name: 'Austria' },
+        { flag: 'cz', name: 'Czech Republic' },
+        { flag: 'no', name: 'Norway' },
+        { flag: 'ch', name: 'Switzerland' },
+        { flag: 'fr', name: 'France' },
+      ],
+    },
+  ],
+  next: {
     title: 'Next',
     icon: 'lu-plane-takeoff',
     places: [
       { flag: 'jp', name: 'Japan' },
-      { flag: 'cn', name: 'China' },
       { flag: 'kr', name: 'South Korea' },
       { flag: 'se', name: 'Sweden' },
       { flag: 'fi', name: 'Finland' },
       { flag: 'pt', name: 'Portugal' },
+      { flag: 'us', name: 'USA' },
     ],
   },
-];
+};
 
 export const contact = {
   place: 'Eindhoven, Netherlands',

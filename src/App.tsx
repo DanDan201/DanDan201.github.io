@@ -1,9 +1,10 @@
 import { MotionConfig } from 'motion/react';
 import { HomeMark } from './components/HomeMark';
+import { HudFrame } from './components/HudFrame';
+import { Tape } from './components/Tape';
 import { ThemeToggle } from './components/ThemeToggle';
-import { Toc } from './components/Toc';
 import { sectionIds } from './content';
-import { useActiveSection } from './hooks/useActiveSection';
+import { ActiveSectionContext, useActiveSection } from './hooks/useActiveSection';
 import { Contact } from './sections/Contact';
 import { Favourites } from './sections/Favourites';
 import { Intro } from './sections/Intro';
@@ -15,17 +16,20 @@ export function App() {
   const active = useActiveSection(sectionIds);
   return (
     <MotionConfig reducedMotion="user">
-      <HomeMark />
-      <ThemeToggle />
-      <Toc active={active} />
-      <div className="frames">
-        <Intro />
-        <Work />
-        <Stack />
-        <Favourites />
-        <Travel />
-        <Contact />
-      </div>
+      <ActiveSectionContext value={active}>
+        <HudFrame />
+        <HomeMark />
+        <ThemeToggle />
+        <Tape active={active} />
+        <main className="frames">
+          <Intro />
+          <Work />
+          <Stack />
+          <Favourites />
+          <Travel />
+          <Contact />
+        </main>
+      </ActiveSectionContext>
     </MotionConfig>
   );
 }
