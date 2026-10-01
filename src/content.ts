@@ -39,7 +39,7 @@ export const intro = {
     { flag: 'nl', name: 'Dutch' },
     { flag: 'gb', name: 'English' },
   ] satisfies Place[],
-  lead: "I'm a Data & AI Engineer at Philips in Eindhoven, where I build AI agents for R&D operations. Away from the desk I'm in the gym or the pool, cooking something more ambitious than it needs to be, flying approaches in DCS, or working through a list of countries that keeps getting longer.",
+  lead: "I'm a Data & AI Engineer based in Eindhoven, where I build AI agents either for daily tasks or R&D operations. Away from the desk I'm in the gym or the pool, cooking something ambitious, flying fighters in DCS, or working through a list of countries that keeps getting longer.",
 };
 
 export const jobs = [
@@ -248,7 +248,7 @@ export const travel: { visited: Region[]; next: Region } = {
 
 export const contact = {
   place: 'Eindhoven, Netherlands',
-  note: 'Reach me via Email, Facebook or even Instagram. I do not respond in Linkedin (It is my personal hell).',
+  note: 'Reach me via Email, Facebook or even Instagram. I do not respond in LinkedIn (It is my personal hell).',
   socials: [
     { href: 'mailto:anh.nguyen.work78@gmail.com', label: 'Email', icon: 'lu-mail' },
     { href: 'https://linkedin.com/in/anhnguyen2609', label: 'LinkedIn', icon: 'dv-linkedin' },
