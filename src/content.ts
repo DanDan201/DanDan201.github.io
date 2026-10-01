@@ -248,7 +248,7 @@ export const travel: { visited: Region[]; next: Region } = {
 
 export const contact = {
   place: 'Eindhoven, Netherlands',
-  note: 'Reach me via Email, Facebook or even Instagram. I do not respond in LinkedIn (It is my personal hell).',
+  note: 'Reach me via Email, Facebook or even Instagram. I do not respond on LinkedIn (It is my personal hell).',
   socials: [
     { href: 'mailto:anh.nguyen.work78@gmail.com', label: 'Email', icon: 'lu-mail' },
     { href: 'https://linkedin.com/in/anhnguyen2609', label: 'LinkedIn', icon: 'dv-linkedin' },
