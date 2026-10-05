@@ -18,7 +18,7 @@ export function App() {
     <MotionConfig reducedMotion="user">
       <ActiveSectionContext value={active}>
         <RevealedSectionsContext value={revealed}>
-          <HudFrame />
+          <HudFrame progress={progress} />
           <HomeMark />
           <ThemeToggle />
           <Tape active={active} progress={progress} />

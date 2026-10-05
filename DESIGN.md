@@ -20,16 +20,16 @@ Source row: colors.csv row 83, Space Tech / Aerospace ("Star white + launch blue
 - On Primary: #0F172A
 - Secondary: #94A3B8 (secondary symbology)
 - On Secondary: #0F172A
-- Accent: #3B82F6 (active state only: lock brackets, tape pointer, lit timeline nodes, link underline, flight path marker)
-- HUD trim: light #146C4C, dark #55C98E (outer viewport brackets and right-edge tick scale only; a restrained avionics-green frame)
+- Accent: #3B82F6 (home/theme-control brackets, mobile progress strip, link underlines, timeline nodes, shutter edge and stage scan line)
+- HUD green: light #146C4C, dark #55C98E (outer and content brackets, left tape, right tick scale and SIM ALT box, intro aim marker)
 - On Accent: #FFFFFF
 - Background: #0B0B10
 - Foreground: #F8FAFC
 - Card: #1E1E23 (reserved, no card surfaces in this layout)
 - Card Foreground: #F8FAFC
 - Muted: #232328 (split-flap cells)
-- Muted Foreground: #94A3B8 (labels, meta text, tape labels, module corners)
-- Border: #1E293B (hairlines, tick scales, static rails)
+- Muted Foreground: #94A3B8 (labels, meta text, inactive tape labels and module headings)
+- Border: #1E293B (hairlines, timeline baselines, neutral separators and static rails)
 - Destructive: #EF4444 (reserved, the site has no destructive actions)
 - On Destructive: #FFFFFF
 - Ring: #F8FAFC (focus outline)
@@ -94,18 +94,18 @@ All sharp: 0 on every surface, button, plate and focus ring. Only exception: cou
 - Draw: 480ms ease-out-quint, scaleX or scaleY from 0 for the horizon line, the dotted leaders and the work timeline track (whose nodes light as it passes).
 - Flap: 360ms ease-out-quint, rotateX from -90deg for departure board rows.
 - Shutter: 520ms ease-out-quint, the name is uncovered by a panel sliding right with a 2px accent edge.
-- Stage (desktop): sections remain pinned screens; over 60svh the next stage wipes in top to bottom with an accent scan line while the current one dims and shrinks to 0.96. A 40svh hold leaves waypoint rests 100svh apart. One vertical desktop wheel gesture (32px accumulated) advances exactly one rest with smooth scrolling; further wheel input waits until the scroll and gesture settle. CSS snap points keep other desktop scrolling aligned to the rests. Mobile and reduced-motion retain ordinary scrolling. The hero has no wipe in; on the way out its horizon banks 8deg and its name climbs away. The tape pointer follows scroll through a spring (stiffness 400, damping 40).
+- Stage (desktop): sections remain pinned screens; over 60svh the next stage wipes in top to bottom with an accent scan line while the current one dims and shrinks to 0.96. A 40svh hold leaves waypoint rests 100svh apart. One vertical desktop wheel gesture (32px accumulated) advances exactly one rest with smooth scrolling; further wheel input waits until the scroll and gesture settle. CSS snap points keep other desktop scrolling aligned to the rests. The SIM ALT readout follows waypoint progress from 30,000 ft at Intro to 0 ft at Contact; it is simulated, not live aircraft data. Mobile and reduced-motion retain ordinary scrolling. The hero has no wipe in; on the way out its horizon banks 8deg and its name climbs away. The tape pointer follows scroll through a spring (stiffness 400, damping 40).
 - Reveals replay: on the stage, content plays in when its section becomes active (or as soon as it is uncovered when scrolling back) and resets once the section is out of sight, so every visit replays it. In the mobile flow it plays each time it scrolls into view (whileInView with once off, margin -80px). This repetition is the user's explicit request.
 - Pinned/horizontal: one pinned stage covering the whole desktop page; no horizontal scroll.
 - Mobile: ordinary scrolling, no stage, no parallax, no hero bank; reveals and the timeline draw on view.
 - Reduced motion: no stage (sections scroll normally), no scroll-linked transforms, no boot sequence, no flaps, draws or shutters. Content renders in its final state. The tape pointer, progress fill and heading brackets jump to the active section with no transition; smooth scrolling is off.
 
 ## Component Patterns
-- Shell: fixed viewport corner brackets and a right-edge tick scale (desktop), altitude tape navigation with a moving pointer (desktop), status bar with progress strip (mobile).
+- Shell: fixed viewport corner brackets, right-edge tick scale and SIM ALT readout box (desktop), green altitude tape navigation (desktop), status bar with progress strip (mobile).
 - Mark (home link and favicon): an "A" drawn as a nose caret in Foreground, its crossbar an Accent horizon line running past both legs. The favicon is the same mark on a transparent background; its caret is #0B0B10 or #F8FAFC to match the browser's colour scheme. Hover and keyboard focus lock corner brackets onto the home link (see Motion).
-- Hero: asymmetric. Name top left, pitch ladder top right, full-width horizon with flight path marker, lead bottom left, data block bottom right.
+- Hero: asymmetric. Name top left, pitch ladder to the right, full-width horizon with a green flight-path aim marker, lead bottom left, data block bottom right.
 - Work: flight-log timeline with diamond nodes, then compact education rows.
-- Stack: instrument modules with corner brackets in an asymmetric 2+3 grid (6+6, then 3+3+6).
+- Stack: instrument modules with green corner brackets in an asymmetric 2+3 grid (6+6, then 3+3+6).
 - Favourites: flight-computer readout, label and value joined by a dotted leader.
 - Travel: visited flag grid by region, departure board of next destinations in split-flap cells.
 - Contact: note, labelled link buttons, then the closing quote.
