@@ -31,6 +31,7 @@
   --plate: light-dark(#FFFFFF, #F8FAFC);
   --ring: light-dark(#0B0B10, #F8FAFC);
   --accent: #3B82F6;
+  --hud-green: light-dark(#146C4C, #55C98E);
 
   --font-hud: 'Share Tech Mono', ui-monospace, Consolas, monospace;
   --font-text: 'Fira Code', ui-monospace, Consolas, monospace;
@@ -1004,7 +1005,7 @@ h3 {
     --arm: 1.5rem;
     --weight: 1px;
     inset: var(--s3);
-    color: var(--rule);
+    color: var(--hud-green);
   }
 
   .hud-scale {
@@ -1023,8 +1024,8 @@ h3 {
     display: block;
     height: 200%;
     background:
-      repeating-linear-gradient(to bottom, var(--fg-soft) 0 1px, transparent 1px 3.125rem) left top / 0.75rem 100% no-repeat,
-      repeating-linear-gradient(to bottom, var(--rule) 0 1px, transparent 1px 0.625rem) right top / 0.375rem 100% no-repeat;
+      repeating-linear-gradient(to bottom, var(--hud-green) 0 1px, transparent 1px 3.125rem) left top / 0.75rem 100% no-repeat,
+      repeating-linear-gradient(to bottom, color-mix(in srgb, var(--hud-green) 38%, transparent) 0 1px, transparent 1px 0.625rem) right top / 0.375rem 100% no-repeat;
   }
 
   .frames {
@@ -1181,6 +1182,10 @@ h3 {
  * clicks and focus. This block comes after the plain desktop .frame rules and overrides them.
  */
 @media (min-width: 62rem) and (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
   :root {
     --fade: 60svh;
     --hold: 40svh;
@@ -1194,6 +1199,8 @@ h3 {
     height: calc(100svh + 2 * var(--fade) + var(--hold));
     padding: 0;
     scroll-margin-top: calc(-1 * var(--fade));
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .frame:first-child {

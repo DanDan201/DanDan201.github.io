@@ -21,6 +21,96 @@ export function useSectionTracking<T extends string>(ids: readonly T[]) {
   const [revealed, setRevealed] = useState<ReadonlySet<T>>(() => new Set([ids[0]]));
 
   useEffect(() => {
+    const desktopStage = window.matchMedia('(min-width: 62rem) and (prefers-reduced-motion: no-preference)');
+    let wheelDistance = 0;
+    let wheelDirection = 0;
+    let wheelIdleTimer = 0;
+    let scrollIdleTimer = 0;
+    let scrollFallbackTimer = 0;
+    let navigating = false;
+    let wheelSettled = true;
+    let scrollSettled = true;
+
+    const finishNavigation = () => {
+      if (navigating && wheelSettled && scrollSettled) {
+        navigating = false;
+        window.clearTimeout(scrollFallbackTimer);
+      }
+    };
+
+    const noteWheel = () => {
+      wheelSettled = false;
+      window.clearTimeout(wheelIdleTimer);
+      wheelIdleTimer = window.setTimeout(() => {
+        wheelSettled = true;
+        wheelDistance = 0;
+        wheelDirection = 0;
+        finishNavigation();
+      }, 180);
+    };
+
+    const onScroll = () => {
+      if (!navigating) return;
+      scrollSettled = false;
+      window.clearTimeout(scrollIdleTimer);
+      scrollIdleTimer = window.setTimeout(() => {
+        scrollSettled = true;
+        finishNavigation();
+      }, 140);
+    };
+
+    // One vertical wheel burst advances one desktop waypoint; keyboard and touch input stay native.
+    const onWheel = (event: WheelEvent) => {
+      if (
+        !desktopStage.matches ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        Math.abs(event.deltaY) <= Math.abs(event.deltaX)
+      ) return;
+
+      if (navigating) {
+        event.preventDefault();
+        noteWheel();
+        return;
+      }
+
+      const multiplier = event.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 16
+        : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? window.innerHeight
+          : 1;
+      const delta = event.deltaY * multiplier;
+      const direction = Math.sign(delta);
+      if (!direction) return;
+      if (direction !== wheelDirection) {
+        wheelDistance = 0;
+        wheelDirection = direction;
+      }
+      wheelDistance += Math.abs(delta);
+      noteWheel();
+      if (wheelDistance < 32) return;
+
+      const stops = rests.current;
+      if (stops.length < 2) return;
+      const y = scrollY.get();
+      let current = 0;
+      for (let i = 1; i < stops.length; i++) {
+        if (Math.abs(stops[i] - y) < Math.abs(stops[current] - y)) current = i;
+      }
+      const next = current + direction;
+      if (next < 0 || next >= stops.length || Math.abs(stops[next] - y) < 1) return;
+
+      event.preventDefault();
+      navigating = true;
+      scrollSettled = false;
+      window.clearTimeout(scrollFallbackTimer);
+      scrollFallbackTimer = window.setTimeout(() => {
+        scrollSettled = true;
+        finishNavigation();
+      }, 1500);
+      window.scrollTo({ top: stops[next], behavior: 'smooth' });
+    };
+
     const update = () => {
       const y = scrollY.get();
       const stops = rests.current;
@@ -53,10 +143,17 @@ export function useSectionTracking<T extends string>(ids: readonly T[]) {
     const observer = new ResizeObserver(measure);
     observer.observe(document.body);
     window.addEventListener('resize', measure);
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('scroll', onScroll, { passive: true });
     const unsubscribe = scrollY.on('change', update);
     return () => {
       observer.disconnect();
       window.removeEventListener('resize', measure);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(wheelIdleTimer);
+      window.clearTimeout(scrollIdleTimer);
+      window.clearTimeout(scrollFallbackTimer);
       unsubscribe();
     };
   }, [ids, scrollY]);
