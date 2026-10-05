@@ -19,7 +19,7 @@
 
 /*
  * Palette: colors.csv row 83 (Space Tech / Aerospace). Dark is the row's native mode; the light
- * values are the derivation documented in DESIGN.md. Accent marks "active" and nothing else.
+ * values are the derivation documented in DESIGN.md. HUD green is the theme-aware active accent.
  */
 :root {
   color-scheme: light dark;
@@ -28,10 +28,10 @@
   --fg-soft: light-dark(#1E293B, #94A3B8);
   --rule: light-dark(#94A3B8, #1E293B);
   --cell: light-dark(#FFFFFF, #232328);
-  --plate: light-dark(#FFFFFF, #F8FAFC);
+  --plate: light-dark(#FFFFFF, transparent);
   --ring: light-dark(#0B0B10, #F8FAFC);
-  --accent: #3B82F6;
-  --hud-green: light-dark(#146C4C, #55C98E);
+  --hud-green: light-dark(#00853B, #55C98E);
+  --accent: var(--hud-green);
 
   --font-hud: 'Share Tech Mono', ui-monospace, Consolas, monospace;
   --font-text: 'Fira Code', ui-monospace, Consolas, monospace;
@@ -279,7 +279,7 @@ h3 {
 }
 
 .theme-toggle:hover {
-  color: var(--fg);
+  color: var(--accent);
 }
 
 .theme-toggle[aria-pressed="true"] .theme-toggle-icon {
@@ -540,7 +540,7 @@ h3 {
 }
 
 .log-track {
-  background: var(--accent);
+  background: var(--hud-green);
   transform-origin: top center;
 }
 
@@ -897,6 +897,9 @@ h3 {
 
 /* Desktop HUD: tape, frame furniture, 12-column sections. */
 @media (min-width: 62rem) {
+  :root {
+    --hud-rail-width: 10.5rem;
+  }
   .status-bar {
     display: none;
   }
@@ -1012,56 +1015,113 @@ h3 {
     color: var(--hud-green);
   }
 
-  .hud-altimeter {
-    position: absolute;
-    top: calc(var(--s4) + 2.75rem + var(--s0));
-    right: var(--s5);
-    display: flex;
-    align-items: baseline;
-    gap: var(--s1);
-    padding: var(--s0) var(--s1);
-    border: 1px solid var(--hud-green);
-    background: var(--bg);
-    color: var(--hud-green);
-    font-family: var(--font-hud);
-    font-size: var(--step--1);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    white-space: nowrap;
-  }
+.hud-scale {
+  position: absolute;
+  top: max(12svh, 7rem);
+  right: var(--s5);
+  bottom: max(12svh, 7rem);
+  width: min(var(--hud-rail-width), 18vw);
+  min-width: 9rem;
+  overflow: visible;
+  isolation: isolate;
+  color: var(--hud-green);
+}
 
-  .hud-altimeter-label {
-    font-size: 0.75em;
-  }
+.hud-scale::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 0;
+  width: 3.25rem;
+  height: 2px;
+  background: var(--hud-green);
+  translate: 0 -50%;
+}
 
-  .hud-altimeter-value {
-    min-width: 6ch;
-    text-align: right;
-  }
+.hud-scale-rail {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 1;
+  width: 2.75rem;
+  overflow: hidden;
+  mask-image: linear-gradient(transparent, black 8%, black 92%, transparent);
+}
 
-  .hud-scale {
-    position: absolute;
-    top: max(20svh, 7rem);
-    right: var(--s5);
-    bottom: 20svh;
-    width: 0.75rem;
-    overflow: hidden;
-    mask-image: linear-gradient(transparent, black 20%, black 80%, transparent);
-  }
+.hud-scale-strip {
+  position: absolute;
+  inset: 0 auto auto 0;
+  display: block;
+  width: 2.75rem;
+  height: 200%;
+  background:
+    repeating-linear-gradient(to bottom, var(--hud-green) 0 2px, transparent 2px 0.875rem) left top / 1.25rem 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--hud-green) 0 2px, transparent 2px 4.375rem) left top / 2.75rem 100% no-repeat;
+}
 
-  .hud-scale-strip {
-    position: absolute;
-    inset: 0 0 auto;
-    display: block;
-    height: 200%;
-    background:
-      repeating-linear-gradient(to bottom, var(--hud-green) 0 1px, transparent 1px 3.125rem) left top / 0.75rem 100% no-repeat,
-      repeating-linear-gradient(to bottom, color-mix(in srgb, var(--hud-green) 38%, transparent) 0 1px, transparent 1px 0.625rem) right top / 0.375rem 100% no-repeat;
-  }
+.hud-scale-label {
+  position: absolute;
+  left: 3.75rem;
+  z-index: 2;
+  color: var(--hud-green);
+  font-family: var(--font-hud);
+  font-size: var(--step-2);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  translate: 0 -50%;
+}
+
+.hud-scale-label-upper {
+  top: calc(50% - 5.5rem);
+}
+
+.hud-scale-label-lower {
+  top: calc(50% + 5.5rem);
+}
+
+.hud-altimeter {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 2.75rem;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  height: 3.5rem;
+  padding: 0 0.5rem 0 1.5rem;
+  background: var(--hud-green);
+  color: var(--hud-green);
+  clip-path: polygon(0 50%, 18% 0, 100% 0, 100% 100%, 18% 100%);
+  translate: 0 -50%;
+}
+
+.hud-altimeter::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  z-index: -1;
+  background: var(--bg);
+  clip-path: polygon(0 50%, 18% 0, 100% 0, 100% 100%, 18% 100%);
+}
+
+.hud-altimeter-value {
+  position: relative;
+  z-index: 1;
+  display: block;
+  min-width: 6ch;
+  color: var(--hud-green);
+  font-family: var(--font-hud);
+  font-size: var(--step-2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
 
   .frames {
-    padding: 0 0 0 var(--tape);
+    padding: 0 calc(var(--s5) + var(--hud-rail-width)) 0 var(--tape);
   }
 
   .frame {
@@ -1092,7 +1152,7 @@ h3 {
     display: flex;
     align-items: center;
     gap: var(--s1);
-    color: var(--fg-soft);
+    color: var(--hud-green);
     translate: -50% 50%;
   }
 

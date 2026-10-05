@@ -1,9 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Same mark as the home link (src/components/HomeMark.tsx). The caret follows the browser's colour scheme. -->
+  <!-- Same mark as the home link; the favicon follows the browser's colour scheme. -->
   <style>
     .caret { stroke: #0B0B10; }
-    @media (prefers-color-scheme: dark) { .caret { stroke: #F8FAFC; } }
+    .horizon { stroke: #00853B; }
+    @media (prefers-color-scheme: dark) {
+      .caret { stroke: #F8FAFC; }
+      .horizon { stroke: #55C98E; }
+    }
   </style>
   <path class="caret" d="M6 27 16 6 26 27" fill="none" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
-  <path d="M3 19.5h26" stroke="#3B82F6" stroke-width="2"/>
+  <path class="horizon" d="M3 19.5h26" stroke-width="2"/>
 </svg>
