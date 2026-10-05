@@ -117,14 +117,13 @@ export function useReveal(id: SectionId) {
 
 // Scroll lengths of one stage transition and of the still hold between transitions, in svh.
 // Mirror --fade and --hold in styles.css.
-const FADE = 60;
-const HOLD = 40;
+const FADE = 70;
+const HOLD = 30;
 
 /**
- * Scroll-scrubbed crossfade for one pinned stage. Over the first FADE of its pin a section wipes
- * in top to bottom over the previous one, an accent scan line riding the wipe edge; over the last
- * FADE it dims and shrinks away under the next. The first section has no wipe and the last never
- * leaves. `leaving` (0..1) lets a section add its own exit; styles are undefined off the stage.
+ * Scroll-scrubbed stage transition. The next stage wipes in top-to-bottom; the previous dims and
+ * shrinks away over the last FADE. The same pinned-progress mapping is used in both directions,
+ * so scrolling up retraces the downward animation without a direction-dependent jump.
  */
 export function useStage(ref: RefObject<HTMLElement | null>, place: 'first' | 'middle' | 'last') {
   const enabled = useStageMode();

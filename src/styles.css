@@ -1249,12 +1249,9 @@ h3 {
 }
 
 /*
- * Desktop with motion: a pinned stage. Each section is a tall slot whose .stage sticks to the
- * viewport. Slots overlap by one screen plus --fade, so for --fade of scrolling two stages are
- * pinned together and the later one wipes in over the earlier one; --hold is the still time
- * between wipes. Anchors land after the wipe (negative scroll margin). Lengths mirror FADE and
- * HOLD in motion.ts. Inactive sections are inert (Frame, Intro), so only the visible stage takes
- * clicks and focus. This block comes after the plain desktop .frame rules and overrides them.
+ * Desktop stages stay pinned. Their wipe is a pure function of pinned scroll progress, so
+ * upward scrolling retraces the same animation without a direction-dependent state change.
+ * A 70svh wipe and 30svh hold keep waypoint rests 100svh apart.
  */
 @media (min-width: 62rem) and (prefers-reduced-motion: no-preference) {
   html {
@@ -1262,8 +1259,8 @@ h3 {
   }
 
   :root {
-    --fade: 60svh;
-    --hold: 40svh;
+    --fade: 70svh;
+    --hold: 30svh;
   }
 
   .frame {
