@@ -98,10 +98,10 @@ All sharp: 0 on every surface, button, plate and focus ring. Only exception: cou
 - Reveals replay: on the stage, content plays in when its section becomes active (or as soon as it is uncovered when scrolling back) and resets once the section is out of sight, so every visit replays it. In the mobile flow it plays each time it scrolls into view (whileInView with once off, margin -80px). This repetition is the user's explicit request.
 - Pinned/horizontal: one pinned stage covering the whole desktop page; no horizontal scroll.
 - Mobile: ordinary scrolling, no stage, no parallax, no hero bank; reveals and the timeline draw on view.
-- Reduced motion: no stage (sections scroll normally), no scroll-linked transforms, no boot sequence, no flaps, draws or shutters. Content renders in its final state. The tape pointer, progress fill and heading brackets jump to the active section with no transition; smooth scrolling is off.
+- Reduced motion: no stage (sections scroll normally), no continuously scroll-scrubbed scenes, no boot sequence, no flaps, draws or shutters. Content renders in its final state. The HUD altitude tape, tape pointer, progress fill and heading brackets jump to the nearest active section with no transition; smooth scrolling is off.
 
 ## Component Patterns
-- Shell: fixed viewport corner brackets, a right-edge F-16-style altitude tape with phosphor-green tick graduations, adjacent thousand-foot labels and a center-pointing current-altitude box (desktop), green altitude tape navigation (desktop), status bar with progress strip (mobile).
+- Shell: fixed viewport corner brackets, a right-edge F-16-style altitude tape whose 1,000-foot graduations track simulated altitude (desktop), with the readout centered on its matching tick and neighboring labels following adjacent ticks; green altitude tape navigation (desktop), status bar with progress strip (mobile).
 - Mark (home link and favicon): an "A" drawn as a nose caret in Foreground, its crossbar a theme-aware green horizon line running past both legs. The favicon is the same mark on a transparent background; its caret and horizon follow the browser colour scheme (light: #0B0B10 and #00853B; dark: #F8FAFC and #55C98E). Hover and keyboard focus lock green corner brackets onto the home link (see Motion).
 - Hero: asymmetric. Name top left, green 10/5 pitch ladder and flight-path aim marker to the right, full-width horizon, lead bottom left, data block bottom right.
 - Work: flight-log timeline with a green drawn track and green diamond nodes, then compact education rows.

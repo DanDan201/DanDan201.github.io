@@ -32,6 +32,7 @@
   --ring: light-dark(#0B0B10, #F8FAFC);
   --hud-green: light-dark(#00853B, #55C98E);
   --accent: var(--hud-green);
+  --hud-major-spacing: 4.375rem;
 
   --font-hud: 'Share Tech Mono', ui-monospace, Consolas, monospace;
   --font-text: 'Fira Code', ui-monospace, Consolas, monospace;
@@ -1038,17 +1039,19 @@ h3 {
 
 .hud-scale-strip {
   position: absolute;
-  inset: 0 auto auto 0;
+  top: calc(50% - 21.875rem);
+  left: 0;
   display: block;
   width: 1.75rem;
-  height: 200%;
+  height: calc(100% + 175rem);
   background:
-    repeating-linear-gradient(to bottom, var(--hud-green) 0 2px, transparent 2px 0.875rem) left top / 0.75rem 100% no-repeat,
-    repeating-linear-gradient(to bottom, var(--hud-green) 0 2px, transparent 2px 4.375rem) left top / 1.75rem 100% no-repeat;
+    repeating-linear-gradient(to bottom, var(--hud-green) 0 2px, transparent 2px 0.4375rem) left top / 0.75rem 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--hud-green) 0 2px, transparent 2px var(--hud-major-spacing)) left top / 1.75rem 100% no-repeat;
 }
 
 .hud-scale-label {
   position: absolute;
+  top: 50%;
   left: 2.5rem;
   z-index: 2;
   color: var(--hud-green);
@@ -1058,14 +1061,6 @@ h3 {
   letter-spacing: 0.02em;
   white-space: nowrap;
   translate: 0 -50%;
-}
-
-.hud-scale-label-upper {
-  top: calc(50% - 4.375rem);
-}
-
-.hud-scale-label-lower {
-  top: calc(50% + 4.375rem);
 }
 
 .hud-altimeter {
