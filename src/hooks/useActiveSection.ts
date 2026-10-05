@@ -8,10 +8,10 @@ import type { SectionId } from '../content';
  * its scroll-margin-top, so the same code serves the stacked mobile flow and the pinned desktop stage
  * (whose sections use a negative margin to land after their wipe).
  *
- * On the stage a section is on screen from its slot top (its wipe starts) until the next section is
- * at rest (the wipe over it ends). Content plays in once a section becomes active, or as soon as it
- * starts being uncovered from underneath when scrolling back; it is kept while on screen and reset
- * once out of sight, so every return replays it. `ids` must be stable.
+ * On the stage a section is on screen from its slot top (the wipe begins) until the next section
+ * is at rest. Content plays in as soon as it starts being uncovered in either scroll direction;
+ * it is kept while on screen and reset once out of sight, so every return replays it. `ids` must
+ * be stable.
  */
 export function useSectionTracking<T extends string>(ids: readonly T[]) {
   const { scrollY } = useScroll();
@@ -123,7 +123,7 @@ export function useSectionTracking<T extends string>(ids: readonly T[]) {
         const next = new Set<T>();
         ids.forEach((id, i) => {
           const onScreen = y >= tops.current[i] - 1 && (i === ids.length - 1 || y < stops[i + 1]);
-          if (i === nearest || (onScreen && (i < nearest || previous.has(id)))) next.add(id);
+          if (i === nearest || onScreen) next.add(id);
         });
         return next.size === previous.size && [...next].every(id => previous.has(id)) ? previous : next;
       });

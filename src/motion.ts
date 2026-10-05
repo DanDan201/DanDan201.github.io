@@ -117,8 +117,8 @@ export function useReveal(id: SectionId) {
 
 // Scroll lengths of one stage transition and of the still hold between transitions, in svh.
 // Mirror --fade and --hold in styles.css.
-const FADE = 70;
-const HOLD = 30;
+const FADE = 80;
+const HOLD = 20;
 
 /**
  * Scroll-scrubbed stage transition. The next stage wipes in top-to-bottom; the previous dims and

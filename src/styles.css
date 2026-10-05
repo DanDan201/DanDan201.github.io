@@ -449,14 +449,14 @@ h3 {
 
 /* Two halves with a gap for the flight path marker; each draws outward from it. */
 .horizon-line-left {
-  left: -100vw;
+  left: 0;
   right: calc(22% + 2.25rem);
   transform-origin: right center;
 }
 
 .horizon-line-right {
   left: calc(78% + 2.25rem);
-  right: -100vw;
+  right: 0;
   transform-origin: left center;
 }
 
@@ -1251,7 +1251,7 @@ h3 {
 /*
  * Desktop stages stay pinned. Their wipe is a pure function of pinned scroll progress, so
  * upward scrolling retraces the same animation without a direction-dependent state change.
- * A 70svh wipe and 30svh hold keep waypoint rests 100svh apart.
+ * An 80svh wipe and 20svh hold keep waypoint rests 100svh apart.
  */
 @media (min-width: 62rem) and (prefers-reduced-motion: no-preference) {
   html {
@@ -1259,8 +1259,8 @@ h3 {
   }
 
   :root {
-    --fade: 70svh;
-    --hold: 30svh;
+    --fade: 80svh;
+    --hold: 20svh;
   }
 
   .frame {
