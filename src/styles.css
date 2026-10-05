@@ -1018,25 +1018,13 @@ h3 {
 .hud-scale {
   position: absolute;
   top: max(24svh, 7rem);
-  right: var(--s3);
+  right: var(--s1);
   bottom: max(24svh, 7rem);
   width: min(var(--hud-rail-width), 18vw);
   min-width: 7.5rem;
   overflow: visible;
   isolation: isolate;
   color: var(--hud-green);
-}
-
-.hud-scale::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 0;
-  width: 2.75rem;
-  height: 2px;
-  background: var(--hud-green);
-  translate: 0 -50%;
 }
 
 .hud-scale-rail {
